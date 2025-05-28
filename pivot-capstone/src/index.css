@@ -1,8 +1,9 @@
+@import "tailwindcss";
 /* CSS rreset */
 html {
   box-sizing: border-box;
   font-size: 16px;
-  background-color: brown;
+  background-color: bisque;
 }
 
 *, *:before, *:after {
