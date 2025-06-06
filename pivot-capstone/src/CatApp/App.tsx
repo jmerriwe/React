@@ -8,6 +8,7 @@ import CatLottie from "../assets/cat_1.json";
 // CREATE A FUNCTION CALLED fetchData and link to button
 
 export default function App() {
+  // LINES 12-17 IS WHERE I'M CEATING THE STATES= WHERE INFO IS STORED
   const [isLoading, setIsLoading] = useState(false);
   const [catImage, setCatImage] = useState(null);
   const [catImageText, setCatImageText] = useState(null);
@@ -16,6 +17,22 @@ export default function App() {
   const [catFact, setCatFact] = useState("");
 
   // async await: NEW WAY
+  // NEW FUNCTION
+  const fetchAnotherCat = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch("https://cataas.com/cat/gif?json=true");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Oops, Something went wrong!");
+      }
+
+      setCatImage(data.url);
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -68,34 +85,39 @@ export default function App() {
   // INSIDE IF CHECK IF ENTERSITE IS FALSE
   // THEN UPDATE HANDLER TO CHANGE STate ENTERSITE TRUE
   // connect the handler to button
-//   THIS FUNCTION ENTERS(ENTER BUTTON ) SWITCHES THE UI USER INTERFACE(THINGS WE SEE VISUALLY)
+  //   THIS FUNCTION ENTERS(ENTER BUTTON ) SWITCHES THE UI USER INTERFACE(THINGS WE SEE VISUALLY)
   const enterHandler = () => {
-    setEnterSite(true); 
+    setEnterSite(true);
   };
 
   const fetchCatFacts = async () => {
-    
-
     try {
-        const response = await fetch("https://catfact.ninja/fact?max_length=140");
-        const data = await response.json();
-  
-        if (!response.ok) {
-          throw new Error("Oops, Something went wrong!");
-        }
-  
-        setCatFact(data.fact);
-      } catch (error) {
-        alert(error);
+      const response = await fetch("https://catfact.ninja/fact?max_length=140");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Oops, Something went wrong!");
       }
+
+      setCatFact(data.fact);
+    } catch (error) {
+      alert(error);
+    }
   };
   if (enterSite == false) {
     return (
-      <div>
+      <div className="container-1">
         <h2>Welcome to my Cat app!</h2>
-        <Lottie className="h-[100px] w-[100px]"animationData={CatLottie} loop={true} />
-        <button className="bg-[yellow]" onClick={fetchCatFacts}>I like cat facts!</button> 
+        <Lottie
+          className="cat-animation"
+          animationData={CatLottie}
+          loop={true}
+        />
+        <button className="bg-[yellow]" onClick={fetchCatFacts}>
+          I like cat facts!
+        </button>
         <h3>Random cat fact:</h3>
+        
         <p>{catFact}</p>
         <button onClick={enterHandler}>Enter</button>
         <button onClick={fetchCatFacts}>CatFacts</button>
@@ -104,11 +126,11 @@ export default function App() {
   }
 
   return (
-    <div>
-      <h1>Cat App</h1>
-      <p>press the button to get a cat!</p>
+    <div className="cat-app">
+      <h1 className="title">Cat App</h1>
+      <p className="subtitle">press the button to get a cat!</p>
 
-      <button onClick={fetchData}>
+      <button className="main-button" onClick={fetchData}>
         {isLoading === true ? "Loading..." : "Meow"}
       </button>
 
@@ -117,6 +139,8 @@ export default function App() {
       {catImage && <img src={catImage} alt="default text" />}
 
       <button onClick={fetchCatText}>Cat Says</button>
+
+      <button onClick={fetchAnotherCat}>Look what I can do!</button>
 
       <input
         type="text"

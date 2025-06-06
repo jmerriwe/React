@@ -3,7 +3,7 @@
 html {
   box-sizing: border-box;
   font-size: 16px;
-  background-color: bisque;
+  background-color: gray;
 }
 
 *, *:before, *:after {
