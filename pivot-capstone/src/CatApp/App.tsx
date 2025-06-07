@@ -28,6 +28,7 @@ export default function App() {
         throw new Error("Oops, Something went wrong!");
       }
 
+      setIsLoading(false)
       setCatImage(data.url);
     } catch (error) {
       alert(error);
@@ -43,7 +44,7 @@ export default function App() {
       if (!response.ok) {
         throw new Error("Oops, Something went wrong!");
       }
-
+      setIsLoading(false)
       setCatImage(data.url);
     } catch (error) {
       alert(error);
@@ -75,6 +76,7 @@ export default function App() {
           throw new Error("Oops, Something went wrong!");
         }
         setCatImageText(response.url);
+        setIsLoading(false)
       })
       // TODAY
       .catch((error) => {
@@ -120,13 +122,16 @@ export default function App() {
         
         <p>{catFact}</p>
         <button onClick={enterHandler}>Enter</button>
-        <button onClick={fetchCatFacts}>CatFacts</button>
+        
       </div>
     );
   }
-
+const goBack= () => {
+  setEnterSite(false)
+}
   return (
     <div className="cat-app">
+      <button onClick={goBack} className="">Go back</button>
       <h1 className="title">Cat App</h1>
       <p className="subtitle">press the button to get a cat!</p>
 
